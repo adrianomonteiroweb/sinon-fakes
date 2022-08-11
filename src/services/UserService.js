@@ -1,3 +1,5 @@
+const { firstElementByArray } = require("./utils/functions");
+
 function UserService(userRepository) {
   async function getAll() {
     try {
@@ -13,7 +15,11 @@ function UserService(userRepository) {
     }
   }
 
-  async function getOneByEmail(email) {}
+  async function getOneByEmail(email) {
+    const result = await userRepository.find({ email });
+
+    return firstElementByArray(result);
+  }
 
   return {
     getAll,
