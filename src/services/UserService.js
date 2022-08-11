@@ -16,13 +16,21 @@ function UserService(userRepository) {
   }
 
   async function getOneByEmail(email) {
-    const result = await userRepository.find({ email });
+    try {
+      const result = await userRepository.find({ email });
 
-    if (result === null) {
-      throw new Error("User not found.");
+      if (result === null) {
+        throw new Error("User not found.");
+      }
+
+      return firstElementByArray(result);
+    } catch (err) {
+      if (err.message === "Could not connect to db.") {
+        return Promise.reject(new Error("Unavailable service."));
+      }
+
+      return Promise.reject(err);
     }
-
-    return firstElementByArray(result);
   }
 
   return {
