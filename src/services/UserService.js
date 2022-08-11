@@ -13,7 +13,7 @@ function UserService(userRepository) {
     }
   }
 
-  function getOneByEmail() {}
+  async function getOneByEmail(email) {}
 
   return {
     getAll,
