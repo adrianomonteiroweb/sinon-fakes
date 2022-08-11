@@ -66,6 +66,19 @@ describe("UserService", () => {
           expect(err.message).toEqual("User not found.");
         }
       });
+
+      it("#getAll - Error a db connection.", async () => {
+        const err = new Error("Could not connect to db.");
+        const find = fake.rejects(err);
+
+        try {
+          const userService = UserService({ find });
+          await userService.getOneByEmail("juan@email.com");
+        } catch (err) {
+          expect(find.callCount).toBe(1);
+          expect(err.message).toEqual("Unavailable service.");
+        }
+      });
     });
   });
 });
