@@ -41,16 +41,16 @@ describe("UserService", () => {
       it("Should return a user by email.", async () => {
         const user = {
           name: "Juan",
-          email: "jaun@email.com",
+          email: "juan@email.com",
         };
 
         const find = fake.resolves([user]);
         const userService = UserService({ find });
 
-        const result = await userService.getOneByEmail("jaun@email.com");
+        const result = await userService.getOneByEmail("juan@email.com");
 
         expect(find.callCount).toBe(1);
-        expect(find.firstArg).toBe({ email: "juan@email.com" });
+        expect(find.firstArg).toEqual({ email: "juan@email.com" });
         expect(result).toEqual(user);
       });
     });
