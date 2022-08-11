@@ -1,7 +1,9 @@
 function UserService(userRepository) {
-  function getAll() {
+  async function getAll() {
     try {
-      return userRepository.find();
+      const result = await userRepository.find();
+
+      return result;
     } catch (err) {
       if (err.message === "Could not connect to db.") {
         throw new Error("Unavailable service.");
