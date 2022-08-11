@@ -53,6 +53,19 @@ describe("UserService", () => {
         expect(find.firstArg).toEqual({ email: "juan@email.com" });
         expect(result).toEqual(user);
       });
+
+      it("Should return null when user is not found.", async () => {
+        try {
+          const find = fake.resolves(null);
+          const userService = UserService({ find });
+
+          await userService.getOneByEmail("noexists@email.com");
+        } catch (err) {
+          expect(find.callCount).toBe(1);
+          expect(find.firstArg).toEqual({ email: "noexists@email.com" });
+          expect(err.message).toEqual("User not found");
+        }
+      });
     });
   });
 });
