@@ -1,4 +1,4 @@
-const { firstElementByArray } = require("./utils/functions");
+const { firstElementByArray } = require("../utils/functions");
 
 function UserService(userRepository) {
   async function getAll() {
@@ -17,6 +17,10 @@ function UserService(userRepository) {
 
   async function getOneByEmail(email) {
     const result = await userRepository.find({ email });
+
+    if (result === null) {
+      throw new Error("User not found.");
+    }
 
     return firstElementByArray(result);
   }
